@@ -3,11 +3,16 @@ package dev.fabiokusaba.essentials.service;
 import dev.fabiokusaba.essentials.database.model.AvaliacaoFisicaEntity;
 import dev.fabiokusaba.essentials.database.repository.IAlunoRepository;
 import dev.fabiokusaba.essentials.database.repository.IAvaliacaoFisicaRepository;
+import dev.fabiokusaba.essentials.dto.AvaliacaoFisicaProjection;
 import dev.fabiokusaba.essentials.dto.AvaliacaoFisicaRequestDto;
 import dev.fabiokusaba.essentials.exception.BadRequestException;
 import dev.fabiokusaba.essentials.exception.NotFoundException;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
+
+import java.util.List;
 
 @Service
 @RequiredArgsConstructor
@@ -40,5 +45,13 @@ public class AvaliacaoFisicaService {
         // cascade dentro do relacionamento
         aluno.setAvaliacaoFisicaEntity(avaliacaoFisica);
         alunoRepository.save(aluno);
+    }
+
+    public List<AvaliacaoFisicaProjection> getAllAvaliacoes() {
+        return avaliacaoFisicaRepository.getAllAvaliacoes();
+    }
+
+    public Page<AvaliacaoFisicaProjection> getAllAvaliacoesPageable(Integer page, Integer size) {
+        return avaliacaoFisicaRepository.getAllAvaliacoesPage(PageRequest.of(page, size));
     }
 }
