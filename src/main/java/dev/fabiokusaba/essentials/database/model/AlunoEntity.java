@@ -32,7 +32,7 @@ public class AlunoEntity {
     // e chamar a avaliação física do aluno
     // Por padrão o relacionamento OneToOne usa o tipo de carregamento EAGER, atenção que esse tipo de carregamento pode
     // causar problemas de performance em queries, sempre que possível prefira o tipo de carregamento LAZY
-    @OneToOne(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    @OneToOne(cascade = {CascadeType.PERSIST, CascadeType.MERGE}, fetch = FetchType.LAZY)
     @JoinColumn(name = "avaliacao_fisica_id")
     private AvaliacaoFisicaEntity avaliacaoFisicaEntity;
 

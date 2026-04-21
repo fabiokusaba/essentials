@@ -29,4 +29,10 @@ public class AlunoController {
         var avaliacaoFisicaAluno = alunoService.getAvaliacaoFisicaByAlunoId(id);
         return ResponseEntity.ok(avaliacaoFisicaAluno);
     }
+
+    @DeleteMapping("{id}")
+    @ResponseStatus(HttpStatus.NO_CONTENT)
+    public void remove(@PathVariable Long id) {
+        alunoService.remove(id);
+    }
 }
