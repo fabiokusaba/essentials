@@ -3,7 +3,9 @@ package dev.fabiokusaba.essentials.service;
 import dev.fabiokusaba.essentials.database.model.AlunoEntity;
 import dev.fabiokusaba.essentials.database.repository.IAlunoRepository;
 import dev.fabiokusaba.essentials.dto.AlunoRequestDto;
+import dev.fabiokusaba.essentials.dto.AvaliacaoFisicaResponseDto;
 import dev.fabiokusaba.essentials.exception.BadRequestException;
+import dev.fabiokusaba.essentials.exception.NotFoundException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -25,5 +27,22 @@ public class AlunoService {
                 .nome(alunoRequestDto.nome())
                 .email(alunoRequestDto.email())
                 .build());
+    }
+
+    public AvaliacaoFisicaResponseDto getAvaliacaoFisicaByAlunoId(Long id) {
+        // Validando o ID do aluno
+        var aluno = alunoRepository.findByIdFetch(id)
+                .orElseThrow(() -> new NotFoundException("Aluno não encontrado"));
+
+        // Caso o ID do aluno seja válido vamos pegar a sua avaliação física
+        var avaliacaoFisica = aluno.getAvaliacaoFisicaEntity();
+
+        // Validar a existência da avaliação física desse aluno
+        if (avaliacaoFisica == null) {
+            throw new NotFoundException("Avaliação física não encontrada para esse aluno");
+        }
+
+        // Caso a avaliação física seja válida retornamos ela
+        return AvaliacaoFisicaResponseDto.toResponseDto(avaliacaoFisica);
     }
 }

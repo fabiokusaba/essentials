@@ -1,5 +1,6 @@
 package dev.fabiokusaba.essentials.database.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import jakarta.persistence.*;
 import lombok.*;
 
@@ -12,6 +13,9 @@ import java.math.BigDecimal;
 @AllArgsConstructor
 @NoArgsConstructor
 @Builder
+// Utilizar a anotação JsonIgnoreProperties não é a melhor forma de tratar, mas para fins de conhecimento é
+// possível usá-la para eliminarmos o campo hibernateLazyInitializer do nosso JSON de retorno
+@JsonIgnoreProperties("hibernateLazyInitializer")
 public class AvaliacaoFisicaEntity {
 
     @Id
