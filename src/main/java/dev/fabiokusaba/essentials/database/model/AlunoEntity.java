@@ -24,7 +24,9 @@ public class AlunoEntity {
     private String email;
 
     // Relacionamento 1-1: Um aluno tem uma avaliação física
-    @OneToOne
+    // cascade: Faz as alterações em cascata, então o que for alterado na entidade de alunos vai propagar as alterações
+    // para a entidade de avaliações físicas
+    @OneToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "avaliacao_fisica_id")
     private AvaliacaoFisicaEntity avaliacaoFisicaEntity;
 
